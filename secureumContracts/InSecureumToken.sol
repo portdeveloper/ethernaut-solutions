@@ -9,6 +9,8 @@ contract InSecureumToken {
 
     event Mint(address indexed destination, uint amount);
 
+// vulnerable to reentrancy attacks
+// not checking for 0 addresses
     function transfer(address to, uint amount) public {
         // save the balance in local variables
         // so that we can re-use them multiple times
@@ -20,6 +22,8 @@ contract InSecureumToken {
         balances[to] = safeAdd(balance_to, amount);
     }
 
+// division before multiplication
+// 
     /// @notice Allow users to buy token. 1 ether = 10 tokens
     /// @dev Users can send more ether than token to be bought, to donate a fee to the protocol team
     function buy(uint desired_tokens) public payable {
